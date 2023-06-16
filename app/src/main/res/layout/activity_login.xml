@@ -110,15 +110,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="14sp"
             android:text="@string/sin_cuenta"
             android:textColor="@color/black"
             android:layout_marginEnd="10dp"/>
 
-        <TextView
-            android:id="@+id/txtRegister"
+        <Button
+            android:id="@+id/btnRegister"
             android:layout_width="wrap_content"
+            android:textSize="14sp"
+            android:textAllCaps="false"
             android:layout_height="wrap_content"
             android:textColor="#262626"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:text="@string/registrate"/>
     </LinearLayout>
 

@@ -7,8 +7,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -20,6 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText email, password;
     private TextInputLayout emailContainer, passContainer;
     private CheckBox remember;
+    private Button btnRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,12 @@ public class LoginActivity extends AppCompatActivity {
         email = findViewById(R.id.txtEmail);
         password = findViewById(R.id.txtPassword);
         remember = findViewById(R.id.cbRemember);
+        btnRegister = findViewById(R.id.btnRegister);
+        btnRegister.setOnClickListener(view -> {
+            Intent intent = new Intent(this,RegisterActivity.class);
+            startActivity(intent);
+        });
+
     }
 
     public void login(View view) {
