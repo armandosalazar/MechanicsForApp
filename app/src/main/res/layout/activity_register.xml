@@ -154,6 +154,7 @@
         android:layout_height="wrap_content" />
 
     <CheckBox
+        android:id="@+id/cbMechanic"
         android:text="@string/is_a_mechanic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
@@ -168,6 +169,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="registerUser"
             android:text="@string/register" />
         <Space
             android:layout_width="10dp"
