@@ -10,17 +10,25 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+
 import me.armandosalazar.mechanicsforapp.models.User;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText email, password;
+    private TextInputEditText email, password;
+    private TextInputLayout emailContainer, passContainer;
     private CheckBox remember;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        emailContainer = findViewById(R.id.txtInputEmail);
+        passContainer = findViewById(R.id.txtInputPassword);
+
 
         email = findViewById(R.id.txtEmail);
         password = findViewById(R.id.txtPassword);
