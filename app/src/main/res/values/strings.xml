@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Mechanics For App</string>
+    <string name="informacion_registrada">Informacion registrada:</string>
+    <string name="iniciar_sesion">Iniciar sesión</string>
+    <string name="correo">Ingrese su correo electrónico</string>
+    <string name="pass">Ingrese su contraseña</string>
+    <string name="save_data">Guardar datos</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="folio">Ingrese su folio</string>
+    <string name="institution">Ingrese su institución</string>
+    <string name="lastNames">Ingrese sus apellido(s)</string>
+    <string name="names">Ingrese sus nombre(s)</string>
+    <string name="amount">Ingrese el monto a solicitar</string>
+    <string name="register">Registrar</string>
+    <string name="clean">Limpiar</string>
+    <string name="registrate">Registrate</string>
+    <string name="sin_cuenta">¿No tienes cuenta aún?</string>
 </resources>
