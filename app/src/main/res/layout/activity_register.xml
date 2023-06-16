@@ -1,9 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity">
+    tools:context=".RegisterActivity"
+    android:padding="10dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:text="@string/register_title"/>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtInputName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/names"
+        app:startIconDrawable="@drawable/ic_name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:startIconContentDescription="email_description">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtInputLastName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/lastNames"
+        app:startIconDrawable="@drawable/ic_name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:startIconContentDescription="email_description">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtInputNewEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/correo"
+        app:startIconDrawable="@drawable/ic_email"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:startIconContentDescription="email_description">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtNewEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtInputNewPass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/pass"
+        app:startIconDrawable="@drawable/ic_pass"
+        app:endIconMode="password_toggle"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:startIconContentDescription="email_description">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtNewPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtInputRepeatPass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/repeat_pass"
+        app:startIconDrawable="@drawable/ic_pass"
+        app:endIconMode="password_toggle"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:startIconContentDescription="email_description">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtRepeatPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtInputRfc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/rfc"
+        app:startIconDrawable="@drawable/ic_rfc"
+        android:visibility="gone"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:startIconContentDescription="email_description">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtRfc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+
+    <Spinner
+        android:visibility="gone"
+        android:id="@+id/spTypeOfMechanic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <CheckBox
+        android:text="@string/is_a_mechanic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnRegisterUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/register" />
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="10dp"/>
+
+        <Button
+            android:id="@+id/btnCancelUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancelar" />
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -10,7 +10,7 @@
     <string name="folio">Ingrese su folio</string>
     <string name="institution">Ingrese su institución</string>
     <string name="lastNames">Ingrese sus apellido(s)</string>
-    <string name="names">Ingrese sus nombre(s)</string>
+    <string name="names">Ingrese su nombre(s)</string>
     <string name="amount">Ingrese el monto a solicitar</string>
     <string name="register">Registrar</string>
     <string name="clean">Limpiar</string>
@@ -27,4 +27,8 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="register_title">Registro de usuarios</string>
+    <string name="repeat_pass">Repetir contraseña</string>
+    <string name="is_a_mechanic">¿Es un mecanico?</string>
+    <string name="rfc">Ingrese su RFC</string>
 </resources>
