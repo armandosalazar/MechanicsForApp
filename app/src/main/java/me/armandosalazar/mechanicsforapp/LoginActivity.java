@@ -17,13 +17,19 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import me.armandosalazar.mechanicsforapp.dao.DAO;
 import me.armandosalazar.mechanicsforapp.models.User;
 
 public class LoginActivity extends AppCompatActivity {
+
+    // Share Preferences instance
+    private SharedPreferences sharedPreferences;
 
     private TextInputEditText email, password;
     private TextInputLayout emailContainer, passContainer;
@@ -37,6 +43,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // init share preferences
+        sharedPreferences = getSharedPreferences("mechanics.dat", MODE_PRIVATE);
+
         emailContainer = findViewById(R.id.txtInputEmail);
         passContainer = findViewById(R.id.txtInputPassword);
 
@@ -44,32 +53,43 @@ public class LoginActivity extends AppCompatActivity {
         email = findViewById(R.id.txtEmail);
         password = findViewById(R.id.txtPassword);
         remember = findViewById(R.id.cbRemember);
+
         btnRegister = findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener(view -> {
-            Intent intent = new Intent(this,RegisterActivity.class);
+            Intent intent = new Intent(this, RegisterActivity.class);
             startActivity(intent);
         });
+
+        ArrayList<User> users = DAO.getInstance(sharedPreferences).getUsers();
+        if (users != null) {
+            for (User user : users) {
+                Log.d("User", user.toString());
+            }
+        } else {
+            Log.d("User", "No hay usuarios");
+        }
 
     }
 
     public void login(View view) {
         String email = this.email.getText().toString();
         String password = this.password.getText().toString();
-        searchUserOnFile(email,password);
-        String []words = name.split("(?=\\p{Upper})");
+        searchUserOnFile(email, password);
+        String[] words = name.split("(?=\\p{Upper})");
         name = words[1];
         lastName = words[3];
-        User user = new User(name,lastName,email,password,userFounded);
+        User user = new User(name, lastName, email, password, userFounded);
         if (userFounded && remember.isChecked()) {
-            savePreferences(user);
+            // savePreferences(user);
+            DAO.getInstance(sharedPreferences).createUser(user);
         }
 
-        if(userFounded){
+        if (userFounded) {
             Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
-            intent.putExtra("user",user);
+            intent.putExtra("user", user);
             startActivity(intent);
             finish();
-        }else{
+        } else {
             Toast.makeText(this, "Usuario o contraseña incorrecta!", Toast.LENGTH_SHORT).show();
         }
     }
@@ -79,8 +99,8 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("email", user.getEmail());
         editor.putString("password", user.getPassword());
-        editor.putString("name",user.getName());
-        editor.putString("lastName",user.getLastName());
+        editor.putString("name", user.getName());
+        editor.putString("lastName", user.getLastName());
         editor.putBoolean("remember", user.isRegistered());
         editor.apply();
     }
@@ -89,15 +109,15 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-    private void searchUserOnFile(String user, String pass){
+    private void searchUserOnFile(String user, String pass) {
         Pattern userPattern = Pattern.compile(user);
         Pattern namePattern = Pattern.compile("Nombre:\\s[a-zA-Z]+");
         int lineUser = 0;
         int linePass = 0;
 
-        String []archivos = fileList();
+        String[] archivos = fileList();
 
-        if (existeArchivo(archivos, "users.txt")){
+        if (existeArchivo(archivos, "users.txt")) {
             try {
                 //Objeto que asocia al archivo especificado, para lectura
                 InputStreamReader archivoInterno = new
@@ -109,24 +129,24 @@ public class LoginActivity extends AppCompatActivity {
                 Matcher matcherUser;
                 Matcher nameMatcher;
 
-                while(linea != null && !userFounded){
+                while (linea != null && !userFounded) {
                     matcherUser = userPattern.matcher(linea);
                     nameMatcher = namePattern.matcher(linea);
 
                     boolean userFound = matcherUser.find();
-                    boolean passFound = linea.matches("(.*)"+pass);
+                    boolean passFound = linea.matches("(.*)" + pass);
                     boolean nameFound = nameMatcher.find();
-                    if (userFound && passFound){
-                      if (linePass == lineUser ){
-                          userFounded = true;
+                    if (userFound && passFound) {
+                        if (linePass == lineUser) {
+                            userFounded = true;
 
-                      }
+                        }
                     }
-                    if (nameFound){
+                    if (nameFound) {
                         name = linea;
                     }
                     linea = leerArchivo.readLine();
-                    if (!userFound){
+                    if (!userFound) {
                         lineUser++;
                     }
 
@@ -137,15 +157,15 @@ public class LoginActivity extends AppCompatActivity {
                 leerArchivo.close();
                 archivoInterno.close();
 
-            }catch (IOException e){
-                Toast.makeText(this,"Error al leer el archivo.",Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                Toast.makeText(this, "Error al leer el archivo.", Toast.LENGTH_SHORT).show();
             }
-        }else {
+        } else {
             Toast.makeText(this, "El archivo no existe", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private boolean existeArchivo(String []archivos, String s){
+    private boolean existeArchivo(String[] archivos, String s) {
         for (String archivo : archivos) {
             if (s.equals(archivo)) {
                 return true;

@@ -1,6 +1,8 @@
 package me.armandosalazar.mechanicsforapp.models;
 
-public class Mechanic extends User{
+import java.io.Serializable;
+
+public class Mechanic extends User implements Serializable {
 
     private String rfc;
     private String typeOfMechanic;

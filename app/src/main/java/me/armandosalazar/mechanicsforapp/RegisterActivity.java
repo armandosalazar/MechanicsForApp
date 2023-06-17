@@ -3,6 +3,7 @@ package me.armandosalazar.mechanicsforapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -19,21 +20,26 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 public class RegisterActivity extends AppCompatActivity {
+    // Share Preferences instance
+    private SharedPreferences sharedPreferences;
 
-    private TextInputLayout   txtLayoutName, txtLayoutLastName, txtLayoutPass, txtLayoutRepeatPass, txtLayoutEmail, txtLayoutRfc;
+    private TextInputLayout txtLayoutName, txtLayoutLastName, txtLayoutPass, txtLayoutRepeatPass, txtLayoutEmail, txtLayoutRfc;
     private TextInputEditText txtName, txtLastName, txtPass, txtRepeatPass, txtEmail, txtRfc;
     private CheckBox cbMechanic;
     private Spinner spMechanicType;
     private String previousUsers;
     private int currentId;
-    private String [] typeOfMechanic = {"Seleccione un tipo","Eléctrico","General", "Hojalatería y pintura",
-            "Mecánico Diesel","Frenos y transmisión"};
+    private String[] typeOfMechanic = {"Seleccione un tipo", "Eléctrico", "General", "Hojalatería y pintura",
+            "Mecánico Diesel", "Frenos y transmisión"};
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        // init share preferences
+        sharedPreferences = getSharedPreferences("mechanics", MODE_PRIVATE);
+
         txtLayoutEmail = findViewById(R.id.txtInputNewEmail);
         txtLayoutLastName = findViewById(R.id.txtInputLastName);
         txtLayoutName = findViewById(R.id.txtInputName);
@@ -50,16 +56,16 @@ public class RegisterActivity extends AppCompatActivity {
 
         spMechanicType = findViewById(R.id.spTypeOfMechanic);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,typeOfMechanic);
+                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, typeOfMechanic);
 
         spMechanicType.setAdapter(adapter);
         cbMechanic = findViewById(R.id.cbMechanic);
         cbMechanic.setOnClickListener(view -> {
-            if (isAMechanic()){
+            if (isAMechanic()) {
                 txtRfc.setVisibility(View.VISIBLE);
                 txtLayoutRfc.setVisibility(View.VISIBLE);
                 spMechanicType.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 txtRfc.setVisibility(View.GONE);
                 txtLayoutRfc.setVisibility(View.GONE);
                 spMechanicType.setVisibility(View.GONE);
@@ -69,10 +75,11 @@ public class RegisterActivity extends AppCompatActivity {
         abrirArchivo();
     }
 
-    private boolean isAMechanic(){
+    private boolean isAMechanic() {
         return cbMechanic.isChecked();
     }
-    private void guardarArchivo(){
+
+    private void guardarArchivo() {
         try {
             //Objeto que asocia al archivo especificado, para escritura
             OutputStreamWriter archivoInterno = new OutputStreamWriter(
@@ -81,71 +88,71 @@ public class RegisterActivity extends AppCompatActivity {
             archivoInterno.flush();
             archivoInterno.close();
 
-        }catch (IOException e){
+        } catch (IOException e) {
             Toast.makeText(this, "Error al escribir en el archivo", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void registerUser(View view){
-        if (allFieldsFilled()){
-           if (txtPass.getText().toString().equals(txtRepeatPass.getText().toString())){
-               guardarArchivo();
-               Toast.makeText(this, "Registro de usuario exitoso", Toast.LENGTH_SHORT).show();
-               finish();
-           }else{
-               Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
-           }
-        }else {
+    public void registerUser(View view) {
+        if (allFieldsFilled()) {
+            if (txtPass.getText().toString().equals(txtRepeatPass.getText().toString())) {
+                guardarArchivo();
+                Toast.makeText(this, "Registro de usuario exitoso", Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+            }
+        } else {
             Toast.makeText(this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
         }
     }
-    
-    private boolean allFieldsFilled(){
-        if (isAMechanic()){
+
+    private boolean allFieldsFilled() {
+        if (isAMechanic()) {
             return !txtName.getText().toString().equals("") && !txtLastName.getText().toString().equals("") &&
                     !txtEmail.getText().toString().equals("") && !txtPass.getText().toString().equals("") &&
                     !txtRepeatPass.getText().toString().equals("") && !txtRfc.getText().toString().equals("")
                     && spMechanicType.getSelectedItemPosition() != 0;
-        }else{
+        } else {
             return !txtName.getText().toString().equals("") && !txtLastName.getText().toString().equals("") &&
-                    !txtEmail.getText().toString().equals("") && !txtPass.getText().toString().equals("") && 
+                    !txtEmail.getText().toString().equals("") && !txtPass.getText().toString().equals("") &&
                     !txtRepeatPass.getText().toString().equals("");
         }
-      
+
     }
 
-    private String registerUserOnFile(String currentContentOfTheFile){
+    private String registerUserOnFile(String currentContentOfTheFile) {
         int indexSpinner = spMechanicType.getSelectedItemPosition();
         StringBuilder stringBuilder = new StringBuilder();
-        if (currentContentOfTheFile != null){
+        if (currentContentOfTheFile != null) {
             stringBuilder.append(currentContentOfTheFile);
             stringBuilder.append("\n");
             stringBuilder.append("Nombre: ");
-            stringBuilder.append( txtName.getText().toString());
+            stringBuilder.append(txtName.getText().toString());
             stringBuilder.append("Apellido(s): ");
             stringBuilder.append(txtLastName.getText().toString());
             stringBuilder.append("Correo: ");
             stringBuilder.append(txtEmail.getText().toString());
             stringBuilder.append("Password: ");
             stringBuilder.append(txtPass.getText().toString());
-            if (isAMechanic()){
+            if (isAMechanic()) {
                 stringBuilder.append("RFC: ");
                 stringBuilder.append(txtRfc.getText().toString());
                 stringBuilder.append("Tipo de mecanico: ");
                 stringBuilder.append(spMechanicType.getItemAtPosition(indexSpinner));
             }
 
-        }else{
+        } else {
             stringBuilder.append("\n");
             stringBuilder.append("Nombre: ");
-            stringBuilder.append( txtName.getText().toString());
+            stringBuilder.append(txtName.getText().toString());
             stringBuilder.append("Apellido(s): ");
             stringBuilder.append(txtLastName.getText().toString());
             stringBuilder.append("Correo: ");
             stringBuilder.append(txtEmail.getText().toString());
             stringBuilder.append("Password: ");
             stringBuilder.append(txtPass.getText().toString());
-            if (isAMechanic()){
+            if (isAMechanic()) {
                 stringBuilder.append("RFC: ");
                 stringBuilder.append(txtRfc.getText().toString());
                 stringBuilder.append("Tipo de mecanico: ");
@@ -155,10 +162,10 @@ public class RegisterActivity extends AppCompatActivity {
         return stringBuilder.toString();
     }
 
-    private void abrirArchivo(){
-        String []archivos = fileList();
+    private void abrirArchivo() {
+        String[] archivos = fileList();
 
-        if (existeArchivo(archivos, "users.txt")){
+        if (existeArchivo(archivos, "users.txt")) {
             try {
                 //Objeto que asocia al archivo especificado, para lectura
                 InputStreamReader archivoInterno = new
@@ -169,7 +176,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 String textoLeido = "";
 
-                while(linea != null){
+                while (linea != null) {
                     textoLeido += linea + '\n';
                     linea = leerArchivo.readLine();
                 }
@@ -177,13 +184,13 @@ public class RegisterActivity extends AppCompatActivity {
                 leerArchivo.close();
                 archivoInterno.close();
                 previousUsers = textoLeido;
-            }catch (IOException e){
-                Toast.makeText(this,"Error al leer el archivo.",Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                Toast.makeText(this, "Error al leer el archivo.", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    private boolean existeArchivo(String []archivos, String s){
+    private boolean existeArchivo(String[] archivos, String s) {
         for (String archivo : archivos) {
             if (s.equals(archivo)) {
                 return true;
