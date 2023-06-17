@@ -31,18 +31,32 @@ public class MenuActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivitySidemenuBinding binding;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySidemenuBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        user = (User)getIntent().getSerializableExtra("user");
+        String nameOfUser = "";
+        String lastNameOfUser = "";
+        String email = "";
+        String fullName = "";
         //Obtenemos datos del usuario
-        SharedPreferences prefs = getSharedPreferences("user.dat", MODE_PRIVATE);
-        String nameOfUser = prefs.getString("name", "asdasd");
-        String lastNameOfUser  = prefs.getString("lastName", "aaa");
-        String email = prefs.getString("email","asdas");
-        String fullName = nameOfUser+" "+lastNameOfUser;
+        if (user == null){
+            SharedPreferences prefs = getSharedPreferences("user.dat", MODE_PRIVATE);
+            nameOfUser = prefs.getString("name", "asdasd");
+            lastNameOfUser  = prefs.getString("lastName", "aaa");
+            email = prefs.getString("email","asdas");
+            fullName = nameOfUser+" "+lastNameOfUser;
+        }else{
+            nameOfUser = user.getName();
+            lastNameOfUser = user.getLastName();
+            email = user.getEmail();
+            fullName = nameOfUser + lastNameOfUser;
+        }
+
 
         setSupportActionBar(binding.appBarMenu.toolbar);
         binding.appBarMenu.fab.setOnClickListener(new View.OnClickListener() {

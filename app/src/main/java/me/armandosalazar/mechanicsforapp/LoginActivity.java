@@ -56,13 +56,15 @@ public class LoginActivity extends AppCompatActivity {
         String email = this.email.getText().toString();
         String password = this.password.getText().toString();
         searchUserOnFile(email,password);
-
-        if (userFounded) {
-            String []words = name.split("(?=\\p{Upper})");
-            name = words[1];
-            lastName = words[3];
-            User user = new User(name,lastName,email,password,true);
+        String []words = name.split("(?=\\p{Upper})");
+        name = words[1];
+        lastName = words[3];
+        User user = new User(name,lastName,email,password,userFounded);
+        if (userFounded && remember.isChecked()) {
             savePreferences(user);
+        }
+
+        if(userFounded){
             Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
             intent.putExtra("user",user);
             startActivity(intent);
