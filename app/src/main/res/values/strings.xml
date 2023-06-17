@@ -31,4 +31,6 @@
     <string name="repeat_pass">Repetir contraseña</string>
     <string name="is_a_mechanic">¿Es un mecanico?</string>
     <string name="rfc">Ingrese su RFC</string>
+    <string name="close_session">Cerrar sesión</string>
+    <string name="exit">Salir</string>
 </resources>

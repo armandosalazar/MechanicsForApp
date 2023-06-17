@@ -1,12 +1,16 @@
 package me.armandosalazar.mechanicsforapp;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -61,5 +65,31 @@ public class MenuActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_menu);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case R.id.itmLogout:
+                closeSession();
+                break;
+            case R.id.itmCloseApp:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void closeSession() {
+        SharedPreferences preferences = getSharedPreferences("user.dat", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent logOut = new Intent(this,LoginActivity.class);
+        logOut.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(logOut);
+        finish();
     }
 }
