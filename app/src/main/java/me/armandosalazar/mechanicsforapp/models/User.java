@@ -1,12 +1,13 @@
 package me.armandosalazar.mechanicsforapp.models;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private String email;
     private String password;
     private boolean registered;
     private String lastName;
     private String name;
-
     public String getLastName() {
         return lastName;
     }
@@ -29,10 +30,20 @@ public class User {
         this.registered = false;
     }
 
-    public User(String email, String password, boolean registered) {
+    public User(String  email, String password, boolean registered) {
         this.email = email;
         this.password = password;
         this.registered = registered;
+        this.name = name;
+        this.lastName = lastName;
+    }
+
+    public User(String name, String lastName, String  email, String password, boolean registered) {
+        this.email = email;
+        this.password = password;
+        this.registered = registered;
+        this.name = name;
+        this.lastName = lastName;
     }
 
     public String getEmail() {
