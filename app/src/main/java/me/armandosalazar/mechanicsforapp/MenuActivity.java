@@ -1,11 +1,15 @@
 package me.armandosalazar.mechanicsforapp;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -18,7 +22,10 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Calendar;
+
 import me.armandosalazar.mechanicsforapp.databinding.ActivitySidemenuBinding;
+import me.armandosalazar.mechanicsforapp.models.User;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -28,9 +35,14 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivitySidemenuBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        //Obtenemos datos del usuario
+        SharedPreferences prefs = getSharedPreferences("user.dat", MODE_PRIVATE);
+        String nameOfUser = prefs.getString("name", "asdasd");
+        String lastNameOfUser  = prefs.getString("lastName", "aaa");
+        String email = prefs.getString("email","asdas");
+        String fullName = nameOfUser+" "+lastNameOfUser;
 
         setSupportActionBar(binding.appBarMenu.toolbar);
         binding.appBarMenu.fab.setOnClickListener(new View.OnClickListener() {
@@ -42,6 +54,12 @@ public class MenuActivity extends AppCompatActivity {
         });
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.txtUserName);
+        TextView navUserEmail = (TextView) headerView.findViewById(R.id.txtUserEmail);
+
+        navUsername.setText(fullName);
+        navUserEmail.setText(email);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -92,4 +110,15 @@ public class MenuActivity extends AppCompatActivity {
         startActivity(logOut);
         finish();
     }
+
+//    public void showDateDialog(View view){
+//        day = calendar.get(Calendar.DAY_OF_MONTH);
+//        month = calendar.get(Calendar.MONTH);
+//        year = calendar.get(Calendar.YEAR);
+//
+//        DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this,
+//                (datePicker, i, i1, i2) -> txtResponse.setText(i+"/"+(i1+1)+"/"+i2),year,month,day);
+//        //datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.MAGENTA));
+//        datePickerDialog.show();
+//    }
 }

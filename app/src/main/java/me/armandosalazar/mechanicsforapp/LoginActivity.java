@@ -17,6 +17,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private CheckBox remember;
     private Button btnRegister;
     private boolean userFounded;
+    private String name, lastName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +56,15 @@ public class LoginActivity extends AppCompatActivity {
         String email = this.email.getText().toString();
         String password = this.password.getText().toString();
         searchUserOnFile(email,password);
-        Log.d("LoginActivity",email);
-        User user = new User(email.trim(), password.trim(), userFounded);
 
-        if (user.isRegistered()) {
+        if (userFounded) {
+            String []words = name.split("(?=\\p{Upper})");
+            name = words[1];
+            lastName = words[3];
+            User user = new User(name,lastName,email,password,true);
             savePreferences(user);
             Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
+            intent.putExtra("user",user);
             startActivity(intent);
             finish();
         }else{
@@ -71,8 +76,9 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("user.dat", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("email", user.getEmail());
-        Log.d("SharedPreferences",""+user.isRegistered());
         editor.putString("password", user.getPassword());
+        editor.putString("name",user.getName());
+        editor.putString("lastName",user.getLastName());
         editor.putBoolean("remember", user.isRegistered());
         editor.apply();
     }
@@ -83,8 +89,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void searchUserOnFile(String user, String pass){
         Pattern userPattern = Pattern.compile(user);
-        Pattern passPattern = Pattern.compile(pass);
-
+        Pattern namePattern = Pattern.compile("Nombre:\\s[a-zA-Z]+");
         int lineUser = 0;
         int linePass = 0;
 
@@ -99,25 +104,25 @@ public class LoginActivity extends AppCompatActivity {
                 BufferedReader leerArchivo = new BufferedReader(archivoInterno);
                 String linea = leerArchivo.readLine();
 
-                String textoLeido = "";
                 Matcher matcherUser;
-                Matcher matcherPass;
+                Matcher nameMatcher;
 
                 while(linea != null && !userFounded){
                     matcherUser = userPattern.matcher(linea);
+                    nameMatcher = namePattern.matcher(linea);
 
                     boolean userFound = matcherUser.find();
                     boolean passFound = linea.matches("(.*)"+pass);
+                    boolean nameFound = nameMatcher.find();
                     if (userFound && passFound){
                       if (linePass == lineUser ){
                           userFounded = true;
-                      }else{
-                          Log.d("LoginActivity",lineUser+"");
-                          Log.d("LoginActivity",""+linePass);
 
                       }
                     }
-                    textoLeido += linea + '\n';
+                    if (nameFound){
+                        name = linea;
+                    }
                     linea = leerArchivo.readLine();
                     if (!userFound){
                         lineUser++;
