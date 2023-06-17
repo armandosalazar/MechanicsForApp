@@ -2,6 +2,7 @@ package me.armandosalazar.mechanicsforapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -15,6 +16,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -23,6 +25,7 @@ public class RegisterActivity extends AppCompatActivity {
     private CheckBox cbMechanic;
     private Spinner spMechanicType;
     private String previousUsers;
+    private int currentId;
     private String [] typeOfMechanic = {"Seleccione un tipo","Eléctrico","General", "Hojalatería y pintura",
             "Mecánico Diesel","Frenos y transmisión"};
 
@@ -69,11 +72,24 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean isAMechanic(){
         return cbMechanic.isChecked();
     }
+    private void guardarArchivo(){
+        try {
+            //Objeto que asocia al archivo especificado, para escritura
+            OutputStreamWriter archivoInterno = new OutputStreamWriter(
+                    openFileOutput("users.txt", Activity.MODE_PRIVATE));
+            archivoInterno.write(registerUserOnFile(previousUsers));
+            archivoInterno.flush();
+            archivoInterno.close();
+
+        }catch (IOException e){
+            Toast.makeText(this, "Error al escribir en el archivo", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     public void registerUser(View view){
         if (allFieldsFilled()){
            if (txtPass.getText().toString().equals(txtRepeatPass.getText().toString())){
-               registerUserOnFile(previousUsers);
+               guardarArchivo();
                Toast.makeText(this, "Registro de usuario exitoso", Toast.LENGTH_SHORT).show();
                finish();
            }else{
