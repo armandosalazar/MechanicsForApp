@@ -84,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
     private void searchUserOnFile(String user, String pass){
         Pattern userPattern = Pattern.compile(user);
         Pattern passPattern = Pattern.compile(pass);
+
         int lineUser = 0;
         int linePass = 0;
 
@@ -91,7 +92,6 @@ public class LoginActivity extends AppCompatActivity {
 
         if (existeArchivo(archivos, "users.txt")){
             try {
-                Log.d("Login","Si entro aqui");
                 //Objeto que asocia al archivo especificado, para lectura
                 InputStreamReader archivoInterno = new
                         InputStreamReader(openFileInput("users.txt"));
@@ -105,13 +105,16 @@ public class LoginActivity extends AppCompatActivity {
 
                 while(linea != null && !userFounded){
                     matcherUser = userPattern.matcher(linea);
-                    matcherPass = passPattern.matcher(linea);
 
                     boolean userFound = matcherUser.find();
-                    boolean passFound = matcherPass.find();
+                    boolean passFound = linea.matches("(.*)"+pass);
                     if (userFound && passFound){
-                      if (linePass - lineUser == 1){
+                      if (linePass == lineUser ){
                           userFounded = true;
+                      }else{
+                          Log.d("LoginActivity",lineUser+"");
+                          Log.d("LoginActivity",""+linePass);
+
                       }
                     }
                     textoLeido += linea + '\n';
