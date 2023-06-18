@@ -41,7 +41,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 //                    System.out.println("Mechanic: " + mechanics.get(position).getName());
                     Mechanic mechanic = mechanics.get(position);
                     showCustomDialog(parent.getContext(),
-                            LayoutInflater.from(parent.getContext()),mechanic);
+                            LayoutInflater.from(parent.getContext()), mechanic);
                 }
             });
 
@@ -68,12 +68,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         return mechanics.size();
     }
 
-    public void showCustomDialog(Context context, LayoutInflater layoutInflater,Mechanic mechanic){
+    public void showCustomDialog(Context context, LayoutInflater layoutInflater, Mechanic mechanic) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Datos del mecanico");
         View view = layoutInflater.inflate(R.layout.custom_dialog, null);
-        view.findViewById(R.id.imgCustomDialog);
-        ((TextView) view.findViewById(R.id.tvMechanicName)).setText(mechanic.getName()+" "+mechanic.getLastName());
+        // view.findViewById(R.id.imgCustomDialog);
+        ((TextView) view.findViewById(R.id.tvMechanicName)).setText(mechanic.getName() + " " + mechanic.getLastName());
         ((TextView) view.findViewById(R.id.tvTypeOfMechanic)).setText(mechanic.getTypeOfMechanic());
         ((Button) view.findViewById(R.id.btnAgendar)).setText("Agendar");
         ((Button) view.findViewById(R.id.btnCancelar)).setText("Cancelar");

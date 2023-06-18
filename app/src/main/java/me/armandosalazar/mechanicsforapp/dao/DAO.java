@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import me.armandosalazar.mechanicsforapp.models.Mechanic;
 import me.armandosalazar.mechanicsforapp.models.User;
+import me.armandosalazar.mechanicsforapp.models.Vehicle;
 
 public class DAO {
     private static DAO instance;
@@ -82,6 +83,24 @@ public class DAO {
         }
 
         return null;
+    }
+
+    // TODO: Implement DAO methods for Vehicles
+    public void createVehicle(Vehicle vehicle) {
+        ArrayList<Vehicle> vehicles = getVehicles();
+        if (vehicles == null) {
+            vehicles = new ArrayList<>();
+        }
+        vehicles.add(vehicle);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("vehicles", gson.toJson(vehicles));
+        editor.apply();
+    }
+
+    public ArrayList<Vehicle> getVehicles() {
+        Type type = new TypeToken<ArrayList<Vehicle>>() {
+        }.getType();
+        return gson.fromJson(sharedPreferences.getString("vehicles", ""), type);
     }
 
 }
