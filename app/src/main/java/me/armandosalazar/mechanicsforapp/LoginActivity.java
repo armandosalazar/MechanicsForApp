@@ -1,14 +1,17 @@
 package me.armandosalazar.mechanicsforapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -75,8 +78,13 @@ public class LoginActivity extends AppCompatActivity {
     public void login(View view) {
         String email = String.valueOf(Objects.requireNonNull(emailContainer.getEditText()).getText());
         String password = String.valueOf(Objects.requireNonNull(passContainer.getEditText()).getText());
+        User user = null;
+        try {
+             user = DAO.getInstance(sharedPreferences).userExist(email, password);
 
-        User user = DAO.getInstance(sharedPreferences).userExist(email, password);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         if (user != null) {
             Log.e("LOGIN", user.getEmail() + " - " + user.getPassword());
@@ -85,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else {
-            Toast.makeText(this, "Usuario o contraseña incorrecta!", Toast.LENGTH_SHORT).show();
+           showAlertDialog(view,"Usuario o contraseña incorrecta!");
         }
 
 
@@ -126,6 +134,39 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
+    public void showAlertDialog(View view,String message){
+        AlertDialog.Builder cuadroAlert = new AlertDialog.Builder(LoginActivity.this);
+        cuadroAlert.setTitle("Verifique los campos");
+
+        cuadroAlert.setMessage(message).setPositiveButton("OK",
+                (dialogInterface, i) -> {
+                }).show();
+    }
+
+    public void showCustomDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+        builder.setTitle("Datos del mecanico");
+        View view = getLayoutInflater().inflate(R.layout.custom_dialog, null);
+        ((TextView) view.findViewById(R.id.tvMechanicName)).setText("");
+        ((Button) view.findViewById(R.id.btnAgendar)).setText("Agendar");
+        ((Button) view.findViewById(R.id.btnCancelar)).setText("Cancelar");
+
+        builder.setView(view);
+        AlertDialog alertDialog = builder.create();
+
+        view.findViewById(R.id.btnAgendar).setOnClickListener(v -> {
+            //textInputLayoutResponse.getEditText().setText("Se aceptó");
+            Toast.makeText(this, "Se aceptó", Toast.LENGTH_SHORT).show();
+            alertDialog.dismiss();
+        });
+        view.findViewById(R.id.btnCancelar).setOnClickListener(v -> {
+            //textInputLayoutResponse.getEditText().setText("Se declinó");
+            Toast.makeText(this, "Se declinó", Toast.LENGTH_SHORT).show();
+            alertDialog.dismiss();
+        });
+
+        alertDialog.show();
+    }
 //    private void searchUserOnFile(String user, String pass) {
 //        Pattern userPattern = Pattern.compile(user);
 //        Pattern namePattern = Pattern.compile("Nombre:\\s[a-zA-Z]+");
