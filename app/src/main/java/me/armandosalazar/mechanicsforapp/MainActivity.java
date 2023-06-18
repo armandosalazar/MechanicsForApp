@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         Timer timer = new Timer();
-        timer.schedule(task, 2000);
+        timer.schedule(task, 0);
     }
 
     private boolean isLogged() {
