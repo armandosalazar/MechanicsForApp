@@ -112,6 +112,12 @@ public class RegisterActivity extends AppCompatActivity {
                 mechanic.setRfc(String.valueOf(txtRfc));
                 mechanic.setTypeOfMechanic(typeOfMechanic[indexSelected]);
                 DAO.getInstance(sharedPreferences).createMechanic(mechanic);
+                ArrayList<Mechanic> mechanics = DAO.getInstance(sharedPreferences).getMechanics();
+                for (Mechanic m :
+                        mechanics) {
+                    Log.d("REGISTER", mechanic.getEmail());
+
+                }
                 finish();
             }
             User user = new User();
@@ -129,13 +135,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Log.d("REGISTER", u.getEmail());
 
             }
-//            if (txtPass.getText().toString().equals(txtRepeatPass.getText().toString())) {
-//                guardarArchivo();
-//                Toast.makeText(this, "Registro de usuario exitoso", Toast.LENGTH_SHORT).show();
-//                finish();
-//            } else {
-//                Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
-//            }
+            finish();
         } else {
             Toast.makeText(this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
         }
