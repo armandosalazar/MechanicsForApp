@@ -142,31 +142,6 @@ public class LoginActivity extends AppCompatActivity {
                 (dialogInterface, i) -> {
                 }).show();
     }
-
-    public void showCustomDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-        builder.setTitle("Datos del mecanico");
-        View view = getLayoutInflater().inflate(R.layout.custom_dialog, null);
-        ((TextView) view.findViewById(R.id.tvMechanicName)).setText("");
-        ((Button) view.findViewById(R.id.btnAgendar)).setText("Agendar");
-        ((Button) view.findViewById(R.id.btnCancelar)).setText("Cancelar");
-
-        builder.setView(view);
-        AlertDialog alertDialog = builder.create();
-
-        view.findViewById(R.id.btnAgendar).setOnClickListener(v -> {
-            //textInputLayoutResponse.getEditText().setText("Se aceptó");
-            Toast.makeText(this, "Se aceptó", Toast.LENGTH_SHORT).show();
-            alertDialog.dismiss();
-        });
-        view.findViewById(R.id.btnCancelar).setOnClickListener(v -> {
-            //textInputLayoutResponse.getEditText().setText("Se declinó");
-            Toast.makeText(this, "Se declinó", Toast.LENGTH_SHORT).show();
-            alertDialog.dismiss();
-        });
-
-        alertDialog.show();
-    }
 //    private void searchUserOnFile(String user, String pass) {
 //        Pattern userPattern = Pattern.compile(user);
 //        Pattern namePattern = Pattern.compile("Nombre:\\s[a-zA-Z]+");
