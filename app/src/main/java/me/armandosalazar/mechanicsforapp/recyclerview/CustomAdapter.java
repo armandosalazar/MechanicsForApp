@@ -42,8 +42,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     Mechanic mechanic = mechanics.get(position);
-                    showCustomDialog(parent.getContext(),
-                            LayoutInflater.from(parent.getContext()), mechanic);
+                    showCustomDialog(parent.getContext(), LayoutInflater.from(parent.getContext()), mechanic);
                 }
             });
 
@@ -53,15 +52,15 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     @NonNull
     @Override
     public CustomAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.mechanic_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mechanic_item, parent, false);
         return new ViewHolder((ViewGroup) view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CustomAdapter.ViewHolder holder, int position) {
         Mechanic mechanic = mechanics.get(position);
-        holder.mechanicName.setText(mechanic.getName());
+        String name = mechanic.getName() + " " + mechanic.getLastName();
+        holder.mechanicName.setText(name);
         holder.mechanicType.setText(mechanic.getTypeOfMechanic());
     }
 
@@ -72,25 +71,28 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     public void showCustomDialog(Context context, LayoutInflater layoutInflater, Mechanic mechanic) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
         builder.setTitle("Datos del mecanico");
+
         View view = layoutInflater.inflate(R.layout.custom_dialog, null);
 
         // view.findViewById(R.id.imgCustomDialog);
-        ((TextView) view.findViewById(R.id.tvMechanicName)).setText(mechanic.getName() + " " + mechanic.getLastName());
-        ((TextView) view.findViewById(R.id.tvTypeOfMechanic)).setText(mechanic.getTypeOfMechanic());
-        ((Button) view.findViewById(R.id.btnAgendar)).setText("Agendar");
-        ((Button) view.findViewById(R.id.btnCancelar)).setText("Cancelar");
+        String name = mechanic.getName() + " " + mechanic.getLastName();
+        ((TextView) view.findViewById(R.id.mechanic_name_dialog)).setText(name);
+        ((TextView) view.findViewById(R.id.mechanic_type_dialog)).setText(mechanic.getTypeOfMechanic());
+//        ((Button) view.findViewById(R.id.btnAcceptDialog)).setText("Agendar");
+//        ((Button) view.findViewById(R.id.btnCancelDialog)).setText("Cancelar");
 
         builder.setView(view);
         AlertDialog alertDialog = builder.create();
 
-        view.findViewById(R.id.btnAgendar).setOnClickListener(v -> {
+        view.findViewById(R.id.btnAcceptDialog).setOnClickListener(v -> {
             showDateDialog(view);
             //textInputLayoutResponse.getEditText().setText("Se aceptó");
-            Toast.makeText(context, "Se aceptó", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(context, "Se aceptó", Toast.LENGTH_SHORT).show();
             alertDialog.dismiss();
         });
-        view.findViewById(R.id.btnCancelar).setOnClickListener(v -> {
+        view.findViewById(R.id.btnCancelDialog).setOnClickListener(v -> {
             //textInputLayoutResponse.getEditText().setText("Se declinó");
             Toast.makeText(context, "Se declinó", Toast.LENGTH_SHORT).show();
             alertDialog.dismiss();
@@ -106,11 +108,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         month = calendar.get(Calendar.MONTH);
         year = calendar.get(Calendar.YEAR);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(view.getContext(),
-                (datePicker, i, i1, i2) -> {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(view.getContext(), (datePicker, i, i1, i2) -> {
 //                    TextView txtResponse = findViewById(R.id.txtResponse);
 //                    txtResponse.setText(i + "/" + (i1 + 1) + "/" + i2);
-                }, year, month, day);
+        }, year, month, day);
 
         datePickerDialog.show();
     }
