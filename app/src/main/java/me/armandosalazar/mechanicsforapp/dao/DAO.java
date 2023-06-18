@@ -1,6 +1,7 @@
 package me.armandosalazar.mechanicsforapp.dao;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -48,14 +49,14 @@ public class DAO {
 
     public void saveUser(User user) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("users", gson.toJson(user));
+        editor.putString("user", gson.toJson(user));
         editor.apply();
     }
 
     public User getSaveUser() {
         Type type = new TypeToken<User>() {
         }.getType();
-        return gson.fromJson(sharedPreferences.getString("users", ""), type);
+        return gson.fromJson(sharedPreferences.getString("user", ""), type);
     }
 
     // TODO: Implement DAO methods for Mechanic
@@ -81,16 +82,22 @@ public class DAO {
     public User userExist(String email, String password) {
         ArrayList<User> users = getUsers();
         ArrayList<Mechanic> mechanics = getMechanics();
-        for (User user : users
-        ) {
-            if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
-                return user;
+        Log.e("DAO", "userExist: " + users);
+        Log.e("DAO", "mechanicsExist: " + mechanics);
+        if (users != null) {
+            for (User user : users
+            ) {
+                if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
+                    return user;
+                }
             }
         }
-        for (Mechanic mechanic : mechanics
-        ) {
-            if (mechanic.getEmail().equals(email) && mechanic.getPassword().equals(password)) {
-                return mechanic;
+        if (mechanics != null) {
+            for (Mechanic mechanic : mechanics
+            ) {
+                if (mechanic.getEmail().equals(email) && mechanic.getPassword().equals(password)) {
+                    return mechanic;
+                }
             }
         }
 

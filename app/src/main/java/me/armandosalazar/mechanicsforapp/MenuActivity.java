@@ -1,5 +1,6 @@
 package me.armandosalazar.mechanicsforapp;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.Calendar;
+
 import me.armandosalazar.mechanicsforapp.databinding.ActivitySidemenuBinding;
 import me.armandosalazar.mechanicsforapp.models.User;
 
@@ -27,6 +30,7 @@ public class MenuActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivitySidemenuBinding binding;
     private User user;
+    private Calendar calendar;
 
     // share preferences
     private SharedPreferences sharedPreferences;
@@ -44,12 +48,13 @@ public class MenuActivity extends AppCompatActivity {
         String lastNameOfUser = "";
         String email = "";
         String fullName = "";
+
         //Obtenemos datos del usuario
         if (user == null) {
             SharedPreferences prefs = getSharedPreferences("user.dat", MODE_PRIVATE);
-            nameOfUser = prefs.getString("name", "asdasd");
-            lastNameOfUser = prefs.getString("lastName", "aaa");
-            email = prefs.getString("email", "asdas");
+            nameOfUser = prefs.getString("name", "");
+            lastNameOfUser = prefs.getString("lastName", "");
+            email = prefs.getString("email", "");
             fullName = nameOfUser + " " + lastNameOfUser;
         } else {
             nameOfUser = user.getName();
@@ -124,15 +129,4 @@ public class MenuActivity extends AppCompatActivity {
         startActivity(logout);
         finish();
     }
-
-//    public void showDateDialog(View view){
-//        day = calendar.get(Calendar.DAY_OF_MONTH);
-//        month = calendar.get(Calendar.MONTH);
-//        year = calendar.get(Calendar.YEAR);
-//
-//        DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this,
-//                (datePicker, i, i1, i2) -> txtResponse.setText(i+"/"+(i1+1)+"/"+i2),year,month,day);
-//        //datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.MAGENTA));
-//        datePickerDialog.show();
-//    }
 }

@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 import me.armandosalazar.mechanicsforapp.dao.DAO;
@@ -47,6 +48,22 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        // clear all preferences
+        // sharedPreferences.edit().clear().apply();
+
+        // get all preferences
+        Log.e("PREFERENCES", sharedPreferences.getAll().toString());
+
+        // get users
+        ArrayList<User> users = DAO.getInstance(sharedPreferences).getUsers();
+        if (users != null) {
+            for (User user : users) {
+                Log.e("USERS", user.toString());
+            }
+        } else {
+            Log.e("USERS", "No hay usuarios");
+        }
+
         // check if user is logged
         if (sharedPreferences.getBoolean("isLogged", false)) {
             Intent intent = new Intent(this, MenuActivity.class);
@@ -61,13 +78,8 @@ public class LoginActivity extends AppCompatActivity {
     public void login(View view) {
         String email = String.valueOf(Objects.requireNonNull(emailContainer.getEditText()).getText());
         String password = String.valueOf(Objects.requireNonNull(passContainer.getEditText()).getText());
-        User user = null;
-        try {
-            user = DAO.getInstance(sharedPreferences).userExist(email, password);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        User user;
+        user = DAO.getInstance(sharedPreferences).userExist(email, password);
 
         if (user != null) {
             if (remember.isChecked()) {
@@ -81,8 +93,9 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else {
-            showAlertDialog(view, "Usuario o contraseña incorrecta!");
+            showAlertDialog("Usuario o contraseña incorrecta!");
         }
+
     }
 
 
@@ -90,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-    public void showAlertDialog(View view, String message) {
+    public void showAlertDialog(String message) {
         AlertDialog.Builder cuadroAlert = new AlertDialog.Builder(LoginActivity.this);
         cuadroAlert.setTitle("Verifique los campos");
 

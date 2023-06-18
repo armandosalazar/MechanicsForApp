@@ -35,7 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Spinner spMechanicType;
     private String previousUsers;
     private int currentId;
-    private String[] typeOfMechanic = {"Seleccione un tipo", "Eléctrico", "General", "Hojalatería y pintura",
+    private final String[] typeOfMechanic = {"Seleccione un tipo", "Eléctrico", "General", "Hojalatería y pintura",
             "Mecánico Diesel", "Frenos y transmisión"};
 
 
@@ -234,4 +234,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
+    public void back(View view) {
+        finish();
+    }
 }
