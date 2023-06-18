@@ -102,8 +102,15 @@ public class RegisterActivity extends AppCompatActivity {
     public void registerUser(View view) {
         if (allFieldsFilled()) {
             if (isAMechanic()) {
+                int indexSelected = spMechanicType.getSelectedItemPosition();
                 Mechanic mechanic = new Mechanic();
-
+                mechanic.setName(String.valueOf(txtName.getText()));
+                mechanic.setLastName(String.valueOf(txtLastName.getText()));
+                mechanic.setEmail(String.valueOf(txtEmail.getText()));
+                mechanic.setPassword(String.valueOf(txtPass));
+                mechanic.setRegistered(true);
+                mechanic.setRfc(String.valueOf(txtRfc));
+                mechanic.setTypeOfMechanic(typeOfMechanic[indexSelected]);
                 DAO.getInstance(sharedPreferences).createMechanic(mechanic);
                 finish();
             }
