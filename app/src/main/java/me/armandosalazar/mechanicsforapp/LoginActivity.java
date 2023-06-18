@@ -1,5 +1,6 @@
 package me.armandosalazar.mechanicsforapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -75,8 +76,13 @@ public class LoginActivity extends AppCompatActivity {
     public void login(View view) {
         String email = String.valueOf(Objects.requireNonNull(emailContainer.getEditText()).getText());
         String password = String.valueOf(Objects.requireNonNull(passContainer.getEditText()).getText());
+        User user = null;
+        try {
+             user = DAO.getInstance(sharedPreferences).userExist(email, password);
 
-        User user = DAO.getInstance(sharedPreferences).userExist(email, password);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         if (user != null) {
             Log.e("LOGIN", user.getEmail() + " - " + user.getPassword());
@@ -85,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else {
-            Toast.makeText(this, "Usuario o contraseña incorrecta!", Toast.LENGTH_SHORT).show();
+           showAlertDialog(view,"Usuario o contraseña incorrecta!");
         }
 
 
@@ -126,6 +132,14 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
+    public void showAlertDialog(View view,String message){
+        AlertDialog.Builder cuadroAlert = new AlertDialog.Builder(LoginActivity.this);
+        cuadroAlert.setTitle("Verifique los campos");
+
+        cuadroAlert.setMessage(message).setPositiveButton("OK",
+                (dialogInterface, i) -> {
+                }).show();
+    }
 //    private void searchUserOnFile(String user, String pass) {
 //        Pattern userPattern = Pattern.compile(user);
 //        Pattern namePattern = Pattern.compile("Nombre:\\s[a-zA-Z]+");
