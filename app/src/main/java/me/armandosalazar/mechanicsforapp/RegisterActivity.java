@@ -22,6 +22,7 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 import me.armandosalazar.mechanicsforapp.dao.DAO;
+import me.armandosalazar.mechanicsforapp.models.Mechanic;
 import me.armandosalazar.mechanicsforapp.models.User;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -100,6 +101,12 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void registerUser(View view) {
         if (allFieldsFilled()) {
+            if (isAMechanic()) {
+                Mechanic mechanic = new Mechanic();
+
+                DAO.getInstance(sharedPreferences).createMechanic(mechanic);
+                finish();
+            }
             User user = new User();
             user.setName(String.valueOf(txtName.getText()));
             user.setLastName(String.valueOf(txtLastName.getText()));
