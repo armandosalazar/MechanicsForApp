@@ -1,3 +1,36 @@
 <resources>
     <string name="app_name">Mechanics For App</string>
+    <string name="informacion_registrada">Informacion registrada:</string>
+    <string name="iniciar_sesion">Iniciar sesión</string>
+    <string name="correo">Ingrese su correo electrónico</string>
+    <string name="pass">Ingrese su contraseña</string>
+    <string name="save_data">Guardar datos</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="folio">Ingrese su folio</string>
+    <string name="institution">Ingrese su institución</string>
+    <string name="lastNames">Ingrese sus apellido(s)</string>
+    <string name="names">Ingrese su nombre(s)</string>
+    <string name="amount">Ingrese el monto a solicitar</string>
+    <string name="register">Registrar</string>
+    <string name="clean">Limpiar</string>
+    <string name="registrate">Registrate</string>
+    <string name="sin_cuenta">¿No tienes cuenta aún?</string>
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Agendar Citas</string>
+    <string name="menu_gallery">Ver historial de citas</string>
+    <string name="menu_slideshow">Registrar vehiculo</string>
+    <string name="register_title">Registro de usuarios</string>
+    <string name="repeat_pass">Repetir contraseña</string>
+    <string name="is_a_mechanic">¿Es un mecanico?</string>
+    <string name="rfc">Ingrese su RFC</string>
+    <string name="close_session">Cerrar sesión</string>
+    <string name="exit">Salir</string>
 </resources>
