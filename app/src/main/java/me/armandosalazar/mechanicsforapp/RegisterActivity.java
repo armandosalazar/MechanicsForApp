@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -18,6 +19,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+
+import me.armandosalazar.mechanicsforapp.dao.DAO;
+import me.armandosalazar.mechanicsforapp.models.User;
 
 public class RegisterActivity extends AppCompatActivity {
     // Share Preferences instance
@@ -38,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         // init share preferences
-        sharedPreferences = getSharedPreferences("mechanics", MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("mechanics.dat", MODE_PRIVATE);
 
         txtLayoutEmail = findViewById(R.id.txtInputNewEmail);
         txtLayoutLastName = findViewById(R.id.txtInputLastName);
@@ -95,13 +100,28 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void registerUser(View view) {
         if (allFieldsFilled()) {
-            if (txtPass.getText().toString().equals(txtRepeatPass.getText().toString())) {
-                guardarArchivo();
-                Toast.makeText(this, "Registro de usuario exitoso", Toast.LENGTH_SHORT).show();
-                finish();
-            } else {
-                Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+            User user = new User();
+            user.setName(String.valueOf(txtName.getText()));
+            user.setLastName(String.valueOf(txtLastName.getText()));
+            user.setEmail(String.valueOf(txtEmail.getText()));
+            user.setPassword(String.valueOf(txtPass.getText()));
+            user.setRegistered(true);
+
+            DAO.getInstance(sharedPreferences).createUser(user);
+
+            ArrayList<User> users = DAO.getInstance(sharedPreferences).getUsers();
+            for (User u :
+                    users) {
+                Log.d("REGISTER", u.getEmail());
+
             }
+//            if (txtPass.getText().toString().equals(txtRepeatPass.getText().toString())) {
+//                guardarArchivo();
+//                Toast.makeText(this, "Registro de usuario exitoso", Toast.LENGTH_SHORT).show();
+//                finish();
+//            } else {
+//                Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+//            }
         } else {
             Toast.makeText(this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
         }
