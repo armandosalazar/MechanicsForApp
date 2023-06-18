@@ -1,28 +1,23 @@
 package me.armandosalazar.mechanicsforapp;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Menu;
 import android.widget.TextView;
 
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
-
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.Calendar;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import me.armandosalazar.mechanicsforapp.databinding.ActivitySidemenuBinding;
 import me.armandosalazar.mechanicsforapp.models.User;
@@ -33,28 +28,34 @@ public class MenuActivity extends AppCompatActivity {
     private ActivitySidemenuBinding binding;
     private User user;
 
+    // share preferences
+    private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // init share preferences
+        sharedPreferences = getSharedPreferences("mechanics.dat", MODE_PRIVATE);
+
         binding = ActivitySidemenuBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        user = (User)getIntent().getSerializableExtra("user");
+        user = (User) getIntent().getSerializableExtra("user");
         String nameOfUser = "";
         String lastNameOfUser = "";
         String email = "";
         String fullName = "";
         //Obtenemos datos del usuario
-        if (user == null){
+        if (user == null) {
             SharedPreferences prefs = getSharedPreferences("user.dat", MODE_PRIVATE);
             nameOfUser = prefs.getString("name", "asdasd");
-            lastNameOfUser  = prefs.getString("lastName", "aaa");
-            email = prefs.getString("email","asdas");
-            fullName = nameOfUser+" "+lastNameOfUser;
-        }else{
+            lastNameOfUser = prefs.getString("lastName", "aaa");
+            email = prefs.getString("email", "asdas");
+            fullName = nameOfUser + " " + lastNameOfUser;
+        } else {
             nameOfUser = user.getName();
             lastNameOfUser = user.getLastName();
             email = user.getEmail();
-            fullName = nameOfUser + lastNameOfUser;
+            fullName = nameOfUser + " " + lastNameOfUser;
         }
 
 
@@ -102,7 +103,7 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.itmLogout:
                 closeSession();
                 break;
@@ -114,14 +115,13 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void closeSession() {
-        SharedPreferences preferences = getSharedPreferences("user.dat", MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.clear();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("isLogged", false);
         editor.apply();
 
-        Intent logOut = new Intent(this,LoginActivity.class);
-        logOut.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(logOut);
+        Intent logout = new Intent(this, LoginActivity.class);
+        logout.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(logout);
         finish();
     }
 

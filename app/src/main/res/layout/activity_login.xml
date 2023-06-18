@@ -8,32 +8,35 @@
     android:padding="20dp"
     tools:context=".LoginActivity">
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/iniciar_sesion"
         android:textAlignment="center"
-        android:textSize="24sp"
+        android:textSize="28sp"
         android:textStyle="bold" />
 
     <Space
         android:layout_width="match_parent"
         android:layout_height="50dp" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtInputEmail"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/correo"
-        app:startIconDrawable="@drawable/ic_email"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:startIconContentDescription="email_description">
+        app:startIconContentDescription="email_description"
+        app:startIconDrawable="@drawable/ic_email">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtEmail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -43,19 +46,18 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtInputPassword"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/pass"
-        app:startIconDrawable="@drawable/ic_pass"
         app:endIconMode="password_toggle"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:startIconContentDescription="email_description">
+        app:startIconContentDescription="email_description"
+        app:startIconDrawable="@drawable/ic_pass">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -76,55 +78,50 @@
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:onClick="login"
         android:background="#000"
-        android:textColor="#fff"
-        android:text="@string/aceptar" />
+        android:onClick="login"
+        android:text="@string/aceptar"
+        android:textColor="#fff" />
 
     <Space
         android:layout_width="wrap_content"
-        android:layout_height="20dp"/>
+        android:layout_height="20dp" />
 
     <Button
         android:id="@+id/btnCancel"
-        android:layout_width="200dp"
-        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="back"
+        android:layout_gravity="center_horizontal"
         android:background="#000"
-        android:textColor="#fff"
-        android:text="@string/cancelar" />
+        android:onClick="back"
+        android:text="@string/cancelar"
+        android:textColor="#fff" />
 
     <Space
         android:layout_width="wrap_content"
-        android:layout_height="20dp"/>
+        android:layout_height="20dp" />
 
-    <LinearLayout
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center_horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:text="@string/sin_cuenta"
-            android:textColor="@color/black"
-            android:layout_marginEnd="10dp"/>
+        android:layout_gravity="center"
+        android:text="@string/sin_cuenta"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="14sp" />
 
-        <Button
-            android:id="@+id/btnRegister"
-            android:layout_width="wrap_content"
-            android:textSize="14sp"
-            android:textAllCaps="false"
-            android:layout_height="wrap_content"
-            android:textColor="#262626"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:text="@string/registrate"/>
-    </LinearLayout>
-
+    <Button
+        android:id="@+id/btnRegister"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/registrate"
+        android:textAllCaps="false"
+        android:textColor="#262626"
+        android:textSize="14sp" />
 
 </LinearLayout>

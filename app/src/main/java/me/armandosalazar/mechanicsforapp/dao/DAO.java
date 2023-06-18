@@ -46,6 +46,18 @@ public class DAO {
         return gson.fromJson(sharedPreferences.getString("users", ""), type);
     }
 
+    public void saveUser(User user) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("users", gson.toJson(user));
+        editor.apply();
+    }
+
+    public User getSaveUser() {
+        Type type = new TypeToken<User>() {
+        }.getType();
+        return gson.fromJson(sharedPreferences.getString("users", ""), type);
+    }
+
     // TODO: Implement DAO methods for Mechanic
     public void createMechanic(Mechanic mechanic) {
         ArrayList<Mechanic> mechanics = getMechanics();

@@ -15,7 +15,7 @@
     <string name="register">Registrar</string>
     <string name="clean">Limpiar</string>
     <string name="registrate">Registrate</string>
-    <string name="sin_cuenta">¿No tienes cuenta aún?</string>
+    <string name="sin_cuenta"><u>¿No tienes cuenta aún?</u></string>
     <string name="title_activity_menu">MenuActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
