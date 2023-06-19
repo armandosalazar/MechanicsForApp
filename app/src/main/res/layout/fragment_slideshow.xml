@@ -8,6 +8,10 @@
     android:padding="10dp"
     tools:context=".ui.slideshow.SlideshowFragment">
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,9 +22,10 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="30dp" />
+        android:layout_height="20dp" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_brand"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,10 +44,11 @@
         android:layout_height="10dp" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_model"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Ingrese la marca"
+        android:hint="Ingrese el modelo"
         app:startIconContentDescription="email_description"
         app:startIconDrawable="@drawable/ic_name">
 
@@ -57,10 +63,11 @@
         android:layout_height="10dp" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_year"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Ingrese la marca"
+        android:hint="Ingrese el año"
         app:startIconContentDescription="email_description"
         app:startIconDrawable="@drawable/ic_name">
 
@@ -75,10 +82,11 @@
         android:layout_height="10dp" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_plates"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Ingrese la marca"
+        android:hint="Ingrese las placas"
         app:startIconContentDescription="email_description"
         app:startIconDrawable="@drawable/ic_name">
 
@@ -93,10 +101,11 @@
         android:layout_height="10dp" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_color"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Ingrese la marca"
+        android:hint="Ingrese el color"
         app:startIconContentDescription="email_description"
         app:startIconDrawable="@drawable/ic_name">
 
@@ -110,21 +119,21 @@
         android:layout_width="match_parent"
         android:layout_height="10dp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <Button
+        android:id="@+id/button_accept"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Ingrese la marca"
-        app:startIconContentDescription="email_description"
-        app:startIconDrawable="@drawable/ic_name">
+        android:text="Aceptar" />
 
-        <com.google.android.material.textfield.TextInputEditText
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_vehicles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+    </ScrollView>
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="10dp" />
 </LinearLayout>
