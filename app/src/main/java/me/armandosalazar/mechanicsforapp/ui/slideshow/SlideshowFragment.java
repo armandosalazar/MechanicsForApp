@@ -7,15 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 import me.armandosalazar.mechanicsforapp.dao.DAO;
@@ -55,7 +54,14 @@ public class SlideshowFragment extends Fragment {
 
         RecyclerView recyclerView = binding.recyclerVehicles;
         recyclerView.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new VehicleAdapter(DAO.getInstance(sharedPreferences).getVehicles()));
+
+        ArrayList<Vehicle> vehicles = DAO.getInstance(sharedPreferences).getVehicles();
+        if (vehicles != null) {
+            recyclerView.setAdapter(new VehicleAdapter(vehicles));
+        } else {
+            recyclerView.setAdapter(new VehicleAdapter(new ArrayList<>()));
+        }
+
 
         Button buttonAccept = binding.buttonAccept;
 
